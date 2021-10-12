@@ -35,38 +35,6 @@ paths:
         "404":
           description: post not found
   /notelog/{notelogId}:
-    get:
-      tags:
-      - notelog
-      summary: Find notelog by ID
-      description: Returns a single notelog
-      operationId: getNotelogById
-      parameters:
-      - name: notelogId
-        in: path
-        description: ID of notelog to return
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-          format: int64
-      responses:
-        "200":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NoteLog'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/NoteLog'
-        "400":
-          description: Invalid ID supplied
-        "404":
-          description: Notelog not found
-      security:
-      - api_key: []
     post:
       tags:
       - notelog
