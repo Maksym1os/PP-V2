@@ -568,6 +568,7 @@ components:
           scopes:
             write:notes: modify pets in your account
             read:notes: read your pets
+            
     api_key:
       type: apiKey
       name: api_key
