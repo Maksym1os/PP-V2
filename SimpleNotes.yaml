@@ -1,0 +1,574 @@
+---
+openapi: 3.0.0
+info:
+  title: SimpleNotes
+  description: |
+    Server for creating and managing notes
+  termsOfService: http://simplenotes.io/terms/
+  contact:
+    email: apiteam@simplenotes.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/Danylo.Sarvas.KNM.2020/lab_5/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: https://simplenotes.swagger.io/v2
+tags:
+- name: note
+  description: A short note
+- name: note_history
+  description: Information about changes in note
+- name: user
+  description: Operations about user
+paths:
+  /notelog:
+    post:
+      tags:
+      - notelog
+      summary: Create a new log in post history
+      operationId: addLog
+      requestBody:
+        $ref: '#/components/requestBodies/NoteLog'
+      responses:
+        "404":
+          description: post not found
+  /notelog/{notelogId}:
+    get:
+      tags:
+      - notelog
+      summary: Find notelog by ID
+      description: Returns a single notelog
+      operationId: getNotelogById
+      parameters:
+      - name: notelogId
+        in: path
+        description: ID of notelog to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoteLog'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/NoteLog'
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Notelog not found
+      security:
+      - api_key: []
+    post:
+      tags:
+      - notelog
+      summary: Updates a notelog in the store with form data
+      operationId: updateNotelogWithForm
+      parameters:
+      - name: notelogId
+        in: path
+        description: ID of notelog that needs to be updated
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/notelog_notelogId_body'
+      responses:
+        "405":
+          description: Invalid input
+      security:
+      - simplenotes_auth:
+        - write:notelog
+        - read:notelog
+  /note:
+    post:
+      tags:
+      - note
+      summary: Create a new note
+      operationId: addNote
+      requestBody:
+        $ref: '#/components/requestBodies/Note'
+      responses:
+        "200":
+          description: Note successfully created
+        "400":
+          description: Invalid name supplied
+  /note/findByTags:
+    get:
+      tags:
+      - note
+      summary: Finds Notes by tags
+      description: Muliple tags can be provided with comma separated strings. Use\ \ tag1, tag2, tag3 for testing.
+      operationId: findNotesByTags
+      parameters:
+      - name: tags
+        in: query
+        description: Tags to filter by
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Note'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Note'
+        "400":
+          description: Invalid tag value
+      deprecated: true
+      security:
+      - simplenotes_auth:
+        - write:notes
+        - read:notes
+  /note/{noteId}:
+    get:
+      tags:
+      - note
+      summary: Find note by ID
+      description: Returns a single note
+      operationId: getNoteById
+      parameters:
+      - name: noteId
+        in: path
+        description: ID of note to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Note'
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Note not found
+      security:
+      - api_key: []
+    put:
+      tags:
+      - note
+      summary: Updates a note in the store with form data
+      operationId: updateNoteWithForm
+      parameters:
+      - name: noteId
+        in: path
+        description: ID of note that needs to be updated
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/note_noteId_body'
+      responses:
+        "405":
+          description: Invalid input
+      security:
+      - simplenotes_auth:
+        - write:pets
+        - read:pets
+    delete:
+      tags:
+      - note
+      summary: Deletes a note
+      operationId: deleteNote
+      parameters:
+      - name: api_key
+        in: header
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: noteId
+        in: path
+        description: Note id to delete
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Note not found
+      security:
+      - simplenotes_auth:
+        - write:notes
+        - read:notes
+  /user:
+    post:
+      tags:
+      - user
+      summary: Create user
+      description: This can only be done by the logged in user.
+      operationId: createUser
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        default:
+          description: successful operation
+  /user/createWithArray:
+    post:
+      tags:
+      - user
+      summary: Creates list of users with given input array
+      operationId: createUsersWithArrayInput
+      requestBody:
+        $ref: '#/components/requestBodies/UserArray'
+      responses:
+        default:
+          description: successful operation
+  /user/createWithList:
+    post:
+      tags:
+      - user
+      summary: Creates list of users with given input array
+      operationId: createUsersWithListInput
+      requestBody:
+        $ref: '#/components/requestBodies/UserArray'
+      responses:
+        default:
+          description: successful operation
+  /user/login:
+    get:
+      tags:
+      - user
+      summary: Logs user into the system
+      operationId: loginUser
+      parameters:
+      - name: username
+        in: query
+        description: The user name for login
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: password
+        in: query
+        description: The password for login in clear text
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successful operation
+          headers:
+            X-Rate-Limit:
+              description: calls per hour allowed by the user
+              style: simple
+              explode: false
+              schema:
+                type: integer
+                format: int32
+            X-Expires-After:
+              description: date in UTC when token expires
+              style: simple
+              explode: false
+              schema:
+                type: string
+                format: date-time
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+        "400":
+          description: Invalid username/password supplied
+  /user/logout:
+    get:
+      tags:
+      - user
+      summary: Logs out current logged in user session
+      operationId: logoutUser
+      responses:
+        default:
+          description: successful operation
+  /user/{username}:
+    get:
+      tags:
+      - user
+      summary: Get user by user name
+      operationId: getUserByName
+      parameters:
+      - name: username
+        in: path
+        description: The name that needs to be fetched. Use user1 for testing.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        "400":
+          description: Invalid username supplied
+        "404":
+          description: User not found
+    put:
+      tags:
+      - user
+      summary: Updated user
+      description: This can only be done by the logged in user.
+      operationId: updateUser
+      parameters:
+      - name: username
+        in: path
+        description: name that need to be updated
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Updated user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        "400":
+          description: Invalid user supplied
+        "404":
+          description: User not found
+    delete:
+      tags:
+      - user
+      summary: Delete user
+      description: This can only be done by the logged in user.
+      operationId: deleteUser
+      parameters:
+      - name: username
+        in: path
+        description: The name that needs to be deleted
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "400":
+          description: Invalid username supplied
+        "404":
+          description: User not found
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        username:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        phone:
+          type: string
+        userStatus:
+          type: integer
+          description: User Status
+          format: int32
+      xml:
+        name: User
+    Tag:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+      xml:
+        name: Tag
+    Note:
+      required:
+      - name
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        creator:
+          $ref: '#/components/schemas/User'
+        name:
+          type: string
+          example: todo List
+        content:
+          type: string
+          example: buy milk
+        connectedUsers:
+          type: array
+          xml:
+            name: user
+            wrapped: true
+          items:
+            $ref: '#/components/schemas/User'
+        tags:
+          type: array
+          xml:
+            name: tag
+            wrapped: true
+          items:
+            $ref: '#/components/schemas/Tag'
+      xml:
+        name: Note
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+    NoteLog:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        user:
+          $ref: '#/components/schemas/User'
+        note:
+          $ref: '#/components/schemas/Note'
+        action:
+          $ref: '#/components/schemas/Action'
+      xml:
+        name: NoteLog
+    Action:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+    notelog_notelogId_body:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Updated name of the notelog
+        status:
+          type: string
+          description: Updated status of the notelog
+    note_noteId_body:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Updated name of the note
+        content:
+          type: string
+          description: Updated content of the pet
+  requestBodies:
+    Note:
+      description: Note object that needs to be added to the store
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Note'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Note'
+      required: true
+    NoteLog:
+      description: Note change that needs to be added to the log
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NoteLog'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/NoteLog'
+      required: true
+    UserArray:
+      description: List of user object
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
+      required: true
+  securitySchemes:
+    simplenotes_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: http://simplenotes.swagger.io/oauth/dialog
+          scopes:
+            write:notes: modify pets in your account
+            read:notes: read your pets
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
