@@ -22,9 +22,12 @@ session = Session()
 user_inst = user(id=2, username="duck", first_name="F_N", last_name="L_N", email="something@duck.net", password="12345",
                  phone="phone", user_status=0)
 
-# session.add(user_inst)
+session.add(user_inst)
 
 session.commit()
 
 print(session.query(user).all())
 session.close()
+
+
+# alembic revision -m "add models" --autogenerate

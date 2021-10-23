@@ -7,6 +7,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, ForeignKey, String, BigInteger, DateTime, BINARY, func
 import sys
 
+# sys.path.append(r"C:\LABS\PP\lab_6\PP_lab")
+
 engine = create_engine("mysql+pymysql://root:password@127.0.0.1/SimpleNotes")
 
 engine.connect()
