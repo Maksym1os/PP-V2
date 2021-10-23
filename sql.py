@@ -21,7 +21,7 @@ BaseModel = declarative_base()
 class user(BaseModel):
     __tablename__ = "user"
 
-    user_id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)
     username = Column(String)
     first_name = Column(String)
     last_name = Column(String)
@@ -33,7 +33,7 @@ class user(BaseModel):
 
 class note(BaseModel):
     __tablename__ = "note"
-    note_id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)
     user_id = Column(Integer, primary_key=True)
     name = Column(String)
 
@@ -45,7 +45,7 @@ class connected_user(BaseModel):
 
 class action(BaseModel):
     __tablename__ = "action"
-    action_id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)
     name = Column(String)
 
 class note_log(BaseModel):

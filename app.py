@@ -19,12 +19,12 @@ def hello_world():
 
 session = Session()
 
-user_inst = user
-(
-    username = "duck",
-)
+user_inst = user(id=2, username="duck", first_name="F_N", last_name="L_N", email="something@duck.net", password="12345",
+                 phone="phone", user_status=0)
 
-note_inst = note(user_id=1, note_id=2, name="stringName")
+# session.add(user_inst)
 
-print(note_inst)
+session.commit()
+
+print(session.query(user).all())
 session.close()
