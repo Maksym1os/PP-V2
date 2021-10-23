@@ -19,8 +19,12 @@ def hello_world():
 
 session = Session()
 
-user_inst = note(user_id=1, note_id=2, name="stringName")
+user_inst = user
+(
+    username = "duck",
+)
 
+note_inst = note(user_id=1, note_id=2, name="stringName")
 
-print(user_inst)
+print(note_inst)
 session.close()

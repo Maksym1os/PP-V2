@@ -36,3 +36,21 @@ class note(BaseModel):
     note_id = Column(Integer, primary_key=True)
     user_id = Column(Integer, primary_key=True)
     name = Column(String)
+
+
+class connected_user(BaseModel):
+    __tablename__ = "connected_user"
+    user_id = Column(Integer, primary_key=True)
+    note_id = Column(Integer, primary_key=True)
+
+class action(BaseModel):
+    __tablename__ = "action"
+    action_id = Column(Integer, primary_key=True)
+    name = Column(String)
+
+class note_log(BaseModel):
+    __tablename__ = "note_log"
+    id = Column(Integer, primary_key=True)
+    note_id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, primary_key=True)
+    action_id = Column(Integer, primary_key=True)
