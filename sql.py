@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, ForeignKey, String, BigInteger, DateTime, BINARY, func
+from sqlalchemy import Column, Integer, ForeignKey, VARCHAR, String, BigInteger, DateTime, BINARY, func
 import sys
 
 # sys.path.append(r"C:\LABS\PP\lab_6\PP_lab")
@@ -24,12 +24,12 @@ class user(BaseModel):
     __tablename__ = "user"
 
     id = Column(Integer, primary_key=True)
-    username = Column(String)
-    first_name = Column(String)
-    last_name = Column(String)
-    email = Column(String)
-    password = Column(String)
-    phone = Column(String)
+    username = Column(VARCHAR(45))
+    first_name = Column(VARCHAR(45))
+    last_name = Column(VARCHAR(50))
+    email = Column(VARCHAR(255))
+    password = Column(VARCHAR(45))
+    phone = Column(VARCHAR(20))
     user_status = Column(Integer)
 
 
@@ -37,7 +37,7 @@ class note(BaseModel):
     __tablename__ = "note"
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, primary_key=True)
-    name = Column(String)
+    name = Column(VARCHAR(255))
 
 
 class connected_user(BaseModel):
@@ -48,7 +48,7 @@ class connected_user(BaseModel):
 class action(BaseModel):
     __tablename__ = "action"
     id = Column(Integer, primary_key=True)
-    name = Column(String)
+    name = Column(VARCHAR(255))
 
 class note_log(BaseModel):
     __tablename__ = "note_log"
