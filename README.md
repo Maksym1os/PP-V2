@@ -3,6 +3,6 @@
 
 Python 3.8.10
 
-TO install:
-    1. cd PP_lab
-    2. virtualenv run flask run
+    1. venv\Scripts\activate
+    2. waitress-serve --port=8000 app:app
+    3. http://localhost:8000/api/v1/hello-world-2
