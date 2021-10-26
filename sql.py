@@ -40,26 +40,29 @@ class user(BaseModel):
                f"Email : {self.email}\n" \
                f"Phone : {self.phone}\n"
 
+
 class note(BaseModel):
     __tablename__ = "note"
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey(user.id))
     name = Column(VARCHAR(255))
 
 
 class connected_user(BaseModel):
     __tablename__ = "connected_user"
-    user_id = Column(Integer, primary_key=True)
-    note_id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey(user.id), primary_key=True)
+    note_id = Column(Integer, ForeignKey(note.id), primary_key=True)
+
 
 class action(BaseModel):
     __tablename__ = "action"
     id = Column(Integer, primary_key=True)
     name = Column(VARCHAR(255))
 
+
 class note_log(BaseModel):
     __tablename__ = "note_log"
     id = Column(Integer, primary_key=True)
-    note_id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, primary_key=True)
-    action_id = Column(Integer, primary_key=True)
+    note_id = Column(Integer, ForeignKey(note.id))
+    user_id = Column(Integer, ForeignKey(user.id))
+    action_id = Column(Integer, ForeignKey(action.id))
