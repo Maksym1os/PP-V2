@@ -32,6 +32,13 @@ class user(BaseModel):
     phone = Column(VARCHAR(20))
     user_status = Column(Integer)
 
+    def __str__(self):
+        return f"User ID : {self.id}\n" \
+               f"First name : {self.first_name}" \
+               f"Last name : {self.last_name}" \
+               f"Username : {self.username}\n" \
+               f"Email : {self.email}\n" \
+               f"Phone : {self.phone}\n"
 
 class note(BaseModel):
     __tablename__ = "note"
