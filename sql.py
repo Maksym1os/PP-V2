@@ -40,6 +40,12 @@ class user(BaseModel):
                f"Email : {self.email}\n" \
                f"Phone : {self.phone}\n"
 
+    def __init__(self, first_name):
+        self.first_name = first_name
+
+    def __repr__(self):
+        return "<User(name={self.first_name!r})>".format(self=self)
+
 
 class note(BaseModel):
     __tablename__ = "note"

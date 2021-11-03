@@ -17,9 +17,6 @@ def hello_world():
     return 'Hello World 2'
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
-
 # session = Session()
 #
 # user_inst = user(id=2, username="user1", first_name="fn", last_name="ln", email="@sth", password="pass", phone="234", user_status=0)

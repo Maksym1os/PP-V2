@@ -31,5 +31,4 @@ Lab_7
 
 alembic downgrade -1
 
-curl -X POST -H "Content-Type:application/json" --data-binary "{\"firstname\": \"Max\"}" http://localhost:5000/api/v1/user
-
+curl -X POST -H "Content-Type:application/json" --data-binary "{\"first_name\": \"Max\"}" http://localhost:5000/user

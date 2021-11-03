@@ -1,7 +1,7 @@
 import db_utils
 
 from app import app
-from schemas import UserToCreate, UserData
+from schemas import UserSchema
 from sql import Session
 from sql import user
 
@@ -19,13 +19,15 @@ def db_lifecycle(func):
 
 @app.route("/user", methods=["POST"])
 def create_user():
-    user_data = UserToCreate.load(request.json)
+    user_data = UserSchema().load(request.get_json())
     user_obj = db_utils.create_entry(user, **user_data)
 
-    with Session as s:
-        s.add(user_obj)
-        s.commit()
+    # with Session as s:
+    #     s.add(user_obj)
+    #     s.commit()
 
-    return jsonify(UserData().dump(user_obj))
+    return UserSchema().dump(user_data)
 
 
+if __name__ == '__main__':
+    app.run(debug=True)
