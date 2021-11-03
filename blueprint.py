@@ -1,4 +1,6 @@
 import db_utils
+
+from app import app
 from schemas import UserToCreate, UserData
 from sql import Session
 from sql import user
@@ -15,7 +17,7 @@ def db_lifecycle(func):
     # with Session as session:
 
 
-
+@app.route("/user", methods=["POST"])
 def create_user():
     user_data = UserToCreate.load(request.json)
     user_obj = db_utils.create_entry(user, **user_data)
