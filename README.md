@@ -18,7 +18,6 @@ using virtualenv as virtual environment
 6. in web-browser write URL:
 >>> http://localhost:8000/api/v1/hello-world-2
 
-
 Lab_6
 
 1. create revision
