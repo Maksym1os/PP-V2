@@ -32,7 +32,7 @@ target_metadata = BaseModel.metadata
 
 config.set_main_option(
     "sqlalchemy.url",
-    "mysql+pymysql://root:password@127.0.0.1/SimpleNotes"
+    "mysql+pymysql://root:45627349350923@127.0.0.1/lab-7"
 )
 
 
