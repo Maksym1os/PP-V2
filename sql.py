@@ -9,7 +9,7 @@ import sys
 
 # sys.path.append(r"C:\LABS\PP\lab_6\PP_lab")
 
-engine = create_engine("mysql+pymysql://root:password@127.0.0.1/SimpleNotes")
+engine = create_engine("mysql+pymysql://root:45627349350923@127.0.0.1/lab-7")
 
 engine.connect()
 
