@@ -33,5 +33,13 @@ def create_user():
     return UserSchema().dump(user_data)
     # return "", 200
 
+
+@app.route('/user')
+def get_users():
+    users = UserSchema.query.all()
+    return jsonify(UserSchema().dump(users).data)
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
