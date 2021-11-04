@@ -1,3 +1,5 @@
+from sqlalchemy import update
+
 import db_utils
 
 from app import app
@@ -5,7 +7,7 @@ from schemas import UserSchema
 from sql import Session
 from sql import user
 
-from flask import request, jsonify
+from flask import request, jsonify, Response
 from functools import wraps
 
 
@@ -51,11 +53,20 @@ def get_users(session):
     return jsonify(UserSchema(many=True).dump(users))
 
 
-@app.route("/user/<int:user_id>")
+@app.route("/user/<int:user_id>", methods=["GET"])
 @db_lifecycle
 def get_user_by_Id(user_id, session):
     user_obj = db_utils.get_entry_by_uid(user, user_id)
     return jsonify(UserSchema().dump(user_obj))
+
+
+@app.route("/user/<int:user_id>", methods=["PUT"])
+@db_lifecycle
+def upd_user_by_Id(user_id, session):
+    new_data = UserSchema().load(request.get_json())
+    db_utils.update_entry_by_uid(session.query(user).filter_by(id=user_id).first(), **new_data)
+
+    return Response("", status=201, mimetype='application/json')
 
 
 if __name__ == '__main__':

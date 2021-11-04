@@ -39,3 +39,5 @@ alembic downgrade -1
 > curl -X POST -H "Content-Type:application/json" --data-binary "{\"first_name\": \"Max\"}" http://localhost:5000/user
 >
 > curl -X GET http://localhost:5000/user/1
+>
+> curl -X PUT -H "Content-Type:application/json" --data-binary "{\"first_name\": \"pussyBoy\"}" http://localhost:5000/user/2
