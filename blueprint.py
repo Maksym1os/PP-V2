@@ -11,10 +11,10 @@ from functools import wraps
 
 def db_lifecycle(func):
     @wraps(func)
-    def wrapper():
+    def wrapper(*args, **kwargs):
         with Session() as s:
             try:
-                rez = func(session=s)
+                rez = func(*args, session=s, **kwargs)
                 s.commit()
                 return rez
             except Exception as e:
@@ -51,12 +51,10 @@ def get_users(session):
     return jsonify(UserSchema(many=True).dump(users))
 
 
-
-@app.route("/user/<int:user_ids", method=[SET])
-adb Lifecycle
-det get_user_by_Id(user_id):
-user cutits.get entry by uidcUsers, user id)
-return jsonify(userdata().dump(user))
+@app.route("/user/<int:user_id>")
+def get_user_by_Id(user_id):
+    user_obj = db_utils.get_entry_by_uid(user, user_id)
+    return jsonify(UserSchema().dump(user_obj))
 
 
 if __name__ == '__main__':
