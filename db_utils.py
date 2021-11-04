@@ -1,11 +1,6 @@
-from sql import Session
-
 
 def create_entry(model_class, **kwargs):
-    obj = model_class(**kwargs)
-    # with Session() as s:
-    #     s.add(obj)
-    return obj
+    return model_class(**kwargs)
 
 
 def get_entry_by_uid(model_class, obj_id):

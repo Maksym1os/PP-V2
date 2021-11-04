@@ -52,7 +52,8 @@ def get_users(session):
 
 
 @app.route("/user/<int:user_id>")
-def get_user_by_Id(user_id):
+@db_lifecycle
+def get_user_by_Id(user_id, session):
     user_obj = db_utils.get_entry_by_uid(user, user_id)
     return jsonify(UserSchema().dump(user_obj))
 
