@@ -9,28 +9,28 @@ from flask import request, jsonify
 
 
 def db_lifecycle(func):
-    def wrapper():
-        print("fsg")
-        func()
+    def wrapper(*args, **kwargs):
+        with Session() as s:
+            rez = func(*args, session=s, **kwargs)
+            s.commit()
+            return rez
 
     return wrapper
     # with Session as session:
 
 
 @app.route("/user", methods=["POST"])
-def create_user():
+@db_lifecycle
+def create_user(*args, session, **kwargs):
     user_data = UserSchema().load(request.get_json())
     user_obj = db_utils.create_entry(user, **user_data)
+    session.add(user_obj)
+    # print(jsonify(UserSchema().dump(user_obj)))
+    # with Session() as s:
+    #     s.add(user_obj)
+    #     s.commit()
 
-    # first_name = request.json['first_name']
-    # user_obj = user(first_name=first_name)
-    # print(user_obj)
-
-    with Session() as s:
-        s.add(user_obj)
-        s.commit()
-
-    return UserSchema().dump(user_data)
+    return jsonify(UserSchema().dump(user_obj))
     # return "", 200
 
 
