@@ -62,10 +62,11 @@ def get_user_by_Id(user_id):
     return jsonify(UserSchema().dump(user_obj))
 
 
-# @app.route("/user/<string:username>", methods=["GET"])
-# def get_user_by_Id(username):
-#     user_obj = db_utils.get_entry_by_username(user, username)
-#     return jsonify(UserSchema().dump(user_obj))
+@app.route("/user/<string:username>", methods=["GET"])
+@db_lifecycle
+def get_user_by_name(username):
+    user_obj = db_utils.get_entry_by_username(user, username)
+    return jsonify(UserSchema().dump(user_obj))
 
 
 @app.route("/user/<int:user_id>", methods=["PUT"])
