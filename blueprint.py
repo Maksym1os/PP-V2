@@ -9,9 +9,9 @@ from flask import request, jsonify
 
 
 def db_lifecycle(func):
-    def wrapper(*args, **kwargs):
+    def wrapper():
         with Session() as s:
-            rez = func(*args, session=s, **kwargs)
+            rez = func(session=s)
             s.commit()
             return rez
 
@@ -21,14 +21,11 @@ def db_lifecycle(func):
 
 @app.route("/user", methods=["POST"])
 @db_lifecycle
-def create_user(*args, session, **kwargs):
+def create_user(session):
     user_data = UserSchema().load(request.get_json())
     user_obj = db_utils.create_entry(user, **user_data)
+
     session.add(user_obj)
-    # print(jsonify(UserSchema().dump(user_obj)))
-    # with Session() as s:
-    #     s.add(user_obj)
-    #     s.commit()
 
     return jsonify(UserSchema().dump(user_obj))
     # return "", 200
