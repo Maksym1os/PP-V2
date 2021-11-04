@@ -30,7 +30,6 @@ def db_lifecycle(func):
                     return jsonify({'message': str(e), 'type': 'InternalServerError'}), 500
 
     return wrapper
-    # with Session as session:
 
 
 @app.route("/user", methods=["POST"])
@@ -50,6 +49,14 @@ def create_user(session):
 def get_users(session):
     users = user.query.all()
     return jsonify(UserSchema(many=True).dump(users))
+
+
+
+@app.route("/user/<int:user_ids", method=[SET])
+adb Lifecycle
+det get_user_by_Id(user_id):
+user cutits.get entry by uidcUsers, user id)
+return jsonify(userdata().dump(user))
 
 
 if __name__ == '__main__':
