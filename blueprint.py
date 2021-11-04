@@ -6,9 +6,11 @@ from sql import Session
 from sql import user
 
 from flask import request, jsonify
+from functools import wraps
 
 
 def db_lifecycle(func):
+    @wraps(func)
     def wrapper():
         with Session() as s:
             rez = func(session=s)
@@ -32,7 +34,8 @@ def create_user(session):
 
 
 @app.route('/user', methods=["GET"])
-def get_users():
+@db_lifecycle
+def get_users(session):
     users = user.query.all()
     return jsonify(UserSchema(many=True).dump(users))
 
