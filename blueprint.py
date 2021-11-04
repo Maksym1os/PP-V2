@@ -34,11 +34,10 @@ def create_user():
     # return "", 200
 
 
-@app.route('/user')
+@app.route('/user', methods=["GET"])
 def get_users():
-    users = UserSchema.query.all()
-    return jsonify(UserSchema().dump(users).data)
-
+    users = user.query.all()
+    return jsonify(UserSchema(many=True).dump(users))
 
 
 if __name__ == '__main__':

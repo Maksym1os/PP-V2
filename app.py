@@ -1,5 +1,5 @@
 from flask import Flask
-from sql import Session, user, note, action, note_log
+# from sql import Session, User, note, action, note_log
 import os
 import pymysql
 from flask_sqlalchemy import SQLAlchemy
@@ -19,7 +19,7 @@ def hello_world():
 
 # session = Session()
 #
-#user_inst = user(id=2, username="user1", first_name="fn", last_name="ln", email="@sth", password="pass", phone="234", user_status=0)
+# user_inst = user(id=2, username="user1", first_name="fn", last_name="ln", email="@sth", password="pass", phone="234", user_status=0)
 # user_inst2 = user(id=3, username="user2", first_name="fn", last_name="ln", email="@sth", password="pass", phone="234", user_status=0)
 #
 # note_inst = note(id=23, user_id=user_inst.id, name="someNote")
@@ -49,3 +49,4 @@ def hello_world():
 
 
 # alembic revision -m "add models" --autogenerate
+

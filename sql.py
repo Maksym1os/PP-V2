@@ -1,6 +1,9 @@
 import os
 import pymysql
 from flask_sqlalchemy import SQLAlchemy
+from flask import Flask
+from app import app
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.ext.declarative import declarative_base
@@ -18,7 +21,11 @@ SessionFactory = sessionmaker(bind=engine)
 Session = scoped_session(SessionFactory)
 
 BaseModel = declarative_base()
+BaseModel.query = Session.query_property()
 
+
+# db = SQLAlchemy(app)
+#
 
 class user(BaseModel):
     __tablename__ = "user"
@@ -32,19 +39,19 @@ class user(BaseModel):
     phone = Column(VARCHAR(20))
     user_status = Column(Integer)
 
-    def __str__(self):
-        return f"User ID : {self.id}\n" \
-               f"First name : {self.first_name}" \
-               f"Last name : {self.last_name}" \
-               f"Username : {self.username}\n" \
-               f"Email : {self.email}\n" \
-               f"Phone : {self.phone}\n"
+    # def __str__(self):
+    #     return f"User ID : {self.id}\n" \
+    #            f"First name : {self.first_name}" \
+    #            f"Last name : {self.last_name}" \
+    #            f"Username : {self.username}\n" \
+    #            f"Email : {self.email}\n" \
+    #            f"Phone : {self.phone}\n"
 
     def __init__(self, first_name):
         self.first_name = first_name
 
-    def __repr__(self):
-        return "<User(name={self.first_name!r})>".format(self=self)
+    # def __repr__(self):
+    #     return "<User(name={self.first_name!r})>".format(self=self)
 
 
 class note(BaseModel):
@@ -72,3 +79,5 @@ class note_log(BaseModel):
     note_id = Column(Integer, ForeignKey(note.id))
     user_id = Column(Integer, ForeignKey(user.id))
     action_id = Column(Integer, ForeignKey(action.id))
+
+print(user.query.all())
