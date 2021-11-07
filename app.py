@@ -1,21 +1,29 @@
-from flask import Flask
+from functools import wraps
+
+from database.flask_ini import app
+
+
 # from sql import Session, User, note, action, note_log
-import os
-import pymysql
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, scoped_session
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, ForeignKey, String, BigInteger, DateTime, BINARY, func
-import sys
-
-app = Flask(__name__)
+# import os
+# import pymysql
+# from flask_sqlalchemy import SQLAlchemy
+# from sqlalchemy import create_engine
+# from sqlalchemy.orm import sessionmaker, scoped_session
+# from sqlalchemy.ext.declarative import declarative_base
+# from sqlalchemy import Column, Integer, ForeignKey, String, BigInteger, DateTime, BINARY, func
+# import sys
 
 
-@app.route("/api/v1/hello-world-2")
-def hello_world():
-    return 'Hello World 2'
+# app = Flask(__name__)
+#
+#
+# @app.route("/api/v1/hello-world-2")
+# def hello_world():
+#     return 'Hello World 2'
 
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 # session = Session()
 #
@@ -49,4 +57,3 @@ def hello_world():
 
 
 # alembic revision -m "add models" --autogenerate
-

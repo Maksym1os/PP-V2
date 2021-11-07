@@ -1,8 +1,8 @@
-import os
-import pymysql
-from flask_sqlalchemy import SQLAlchemy
-from flask import Flask
-from app import app
+# import os
+# import pymysql
+# from flask_sqlalchemy import SQLAlchemy
+# from flask import Flask
+# from app import app
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
@@ -80,4 +80,4 @@ class note_log(BaseModel):
     user_id = Column(Integer, ForeignKey(user.id))
     action_id = Column(Integer, ForeignKey(action.id))
 
-print(user.query.all())
+# print(user.query.all())

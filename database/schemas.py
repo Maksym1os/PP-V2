@@ -1,5 +1,4 @@
-from marshmallow import post_load, Schema, fields
-from sql import user
+from marshmallow import Schema, fields
 
 
 class UserSchema(Schema):

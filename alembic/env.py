@@ -4,7 +4,7 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
-from sql import BaseModel
+from database.models import BaseModel
 import sys
 
 sys.path.append(r"C:\LABS\PP\lab_6\PP_lab")
