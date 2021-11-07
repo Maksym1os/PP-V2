@@ -1,70 +1,44 @@
-# import database.db_utils as db_utils
 from database.flask_ini import app
-from database import db_utils
 
-from database.models import user, Session
+from database.models import user
 
-from flask import request, jsonify, Response
-from functools import wraps
+from database.blueprints.template import *
 
 from database.schemas import UserSchema
-
-
-def db_lifecycle(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        try:
-            return func(*args, **kwargs)
-        except Exception as e:
-            if isinstance(e, ValueError):
-                return jsonify({'message': e.args[0], 'type': 'ValueError'}), 400
-            elif isinstance(e, AttributeError):
-                return jsonify({'message': e.args[0], 'type': 'AttributeError'}), 400
-            elif isinstance(e, KeyError):
-                return jsonify({'message': e.args[0], 'type': 'KeyError'}), 400
-            elif isinstance(e, TypeError):
-                return jsonify({'message': e.args[0], 'type': 'TypeError'}), 400
-            else:
-                return jsonify({'message': str(e), 'type': 'InternalServerError'}), 500
-
-    return wrapper
 
 
 @app.route("/user", methods=["POST"])
 @db_lifecycle
 def create_user():
-    user_data = UserSchema().load(request.get_json())
-    user_obj = db_utils.create_entry(user, **user_data)
-
-    return jsonify(UserSchema().dump(user_obj))
-    # return "", 200
+    return create_obj(UserSchema, user)
 
 
 @app.route('/user', methods=["GET"])
 @db_lifecycle
 def get_users():
-    users = user.query.all()
-    return jsonify(UserSchema(many=True).dump(users))
+    return get_objects(UserSchema, user)
 
 
-@app.route("/user/<int:user_id>", methods=["GET"])
+@app.route("/user/<int:Id>", methods=["GET"])
 @db_lifecycle
-def get_user_by_Id(user_id):
-    user_obj = db_utils.get_entry_by_uid(user, user_id)
-    return jsonify(UserSchema().dump(user_obj))
+def get_user_by_Id(Id):
+    return get_obj_by_Id(UserSchema, user, Id)
 
 
 @app.route("/user/<string:username>", methods=["GET"])
 @db_lifecycle
 def get_user_by_name(username):
-    user_obj = db_utils.get_entry_by_username(user, username)
-    return jsonify(UserSchema().dump(user_obj))
+    obj = get_entry_by_username(user, username)
+    return jsonify(UserSchema().dump(obj))
 
 
-@app.route("/user/<int:user_id>", methods=["PUT"])
+@app.route("/user/<int:Id>", methods=["PUT"])
 @db_lifecycle
-def upd_user_by_Id(user_id):
-    new_data = UserSchema().load(request.get_json())
-    db_utils.update_entry_by_uid(user, user_id, **new_data)
+def upd_user_by_Id(Id):
+    return upd_obj_by_Id(UserSchema, user, Id)
 
-    return Response("", status=201, mimetype='application/json')
+
+@app.route("/user/<int:Id>", methods=["DELETE"])  # delete user by id
+@db_lifecycle
+def delete_user_by_id(Id):
+    return delete_obj_by_id(UserSchema, user, Id)
