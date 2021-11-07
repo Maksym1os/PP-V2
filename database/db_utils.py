@@ -1,6 +1,6 @@
 from functools import wraps
 
-from flask import jsonify
+from flask import jsonify, request
 
 from database.models import Session
 
@@ -41,36 +41,43 @@ def session_lifecycle(func):
     return wrapper
 
 
+@db_lifecycle
 @session_lifecycle
-def create_entry(model_class, **kwargs):
-    entry = model_class(**kwargs)
-    session.add(entry)
-    return entry
+def create_obj(ModelSchema, Model):
+    data = ModelSchema().load(request.get_json())
+    obj = Model(**data)
+    session.add(obj)
+    return jsonify(ModelSchema().dump(obj))
+    # return "", 200
 
 
-def get_entries(model_class):  # GET entries by ids
-    return model_class.query.all()
+@db_lifecycle
+def get_objects(ModelSchema, Model):
+    users = Model.query.all()
+    return jsonify(ModelSchema(many=True).dump(users))
 
 
-def get_entry_by_uid(model_class, obj_id):  # GET entry by id
-    return model_class.query.get(obj_id)
+@db_lifecycle
+def get_obj_by_Id(ModelSchema, Model, Id):
+    obj = Model.query.get(Id)
+    return jsonify(ModelSchema().dump(obj))
 
 
-def get_entry_by_username(model, username):  # GET entry by name
-    return model.query.filter_by(username=username).first()
-
-
+@db_lifecycle
 @session_lifecycle
-def update_entry_by_uid(model, obj_id, **kwargs):  # PUT entity by id
-    model = session.query(model).filter_by(id=obj_id).first()
-    for key, value in kwargs.items():
-        setattr(model, key, value)
+def upd_obj_by_Id(ModelSchema, Model, Id):
+    new_data = ModelSchema().load(request.get_json())
+    user_obj = session.query(Model).filter_by(id=Id).first()
+    for key, value in new_data.items():
+        setattr(Model, key, value)
 
-    return model
+    return jsonify(ModelSchema().dump(user_obj))
+    # return Response("", status=201, mimetype='application/json')
 
 
+@db_lifecycle
 @session_lifecycle
-def delete_entry_by_id(model_class, obj_id):  # DELETE entity by id
-    model = session.query(model_class).filter_by(id=obj_id).first()
-    session.delete(model)
-    return model
+def delete_obj_by_id(ModelSchema, Model, Id):
+    obj = session.query(Model).filter_by(id=Id).first()
+    session.delete(obj)
+    return jsonify(ModelSchema().dump(obj))
