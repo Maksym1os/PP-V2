@@ -2,29 +2,20 @@
 from database.flask_ini import app
 from database import db_utils
 
-
-from database.models import Session
-from database.models import user
+from database.models import user, Session
 
 from flask import request, jsonify, Response
 from functools import wraps
 
 from database.schemas import UserSchema
 
-session = Session()
-
 
 def db_lifecycle(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         try:
-            rez = func(*args, **kwargs)
-            session.commit()
-            session.close()
-            return rez
+            return func(*args, **kwargs)
         except Exception as e:
-            session.rollback()
-            session.close()
             if isinstance(e, ValueError):
                 return jsonify({'message': e.args[0], 'type': 'ValueError'}), 400
             elif isinstance(e, AttributeError):
@@ -44,7 +35,6 @@ def db_lifecycle(func):
 def create_user():
     user_data = UserSchema().load(request.get_json())
     user_obj = db_utils.create_entry(user, **user_data)
-    session.add(user_obj)
 
     return jsonify(UserSchema().dump(user_obj))
     # return "", 200
@@ -75,6 +65,6 @@ def get_user_by_name(username):
 @db_lifecycle
 def upd_user_by_Id(user_id):
     new_data = UserSchema().load(request.get_json())
-    db_utils.update_entry_by_uid(user, session, user_id, **new_data)
+    db_utils.update_entry_by_uid(user, user_id, **new_data)
 
     return Response("", status=201, mimetype='application/json')
