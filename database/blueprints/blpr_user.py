@@ -19,16 +19,24 @@ def create_user():
     hashed = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
 
     data.update({"password": hashed})
-
     obj = user(**data)
-
     session.add(obj)
 
-
-    # with Session() as s:
-    #     s.add(obj)
-    #     # s.commit()
     return jsonify(UserSchema().dump(obj))
+
+
+@app.route("/user/login", methods=["POST"])
+@db_lifecycle
+def login():
+    email = request.json.get('email', None)
+    password = request.json.get('password', None)
+
+    user_obj = user.query.filter_by(email=email).first()
+
+    if bcrypt.checkpw(password.encode("utf-8"), user_obj.password.encode("utf-8")):
+        return jsonify(UserSchema().dump(user_obj))
+    else:
+        return 'Wrong Password'
 
 
 @app.route('/user', methods=["GET"])

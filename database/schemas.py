@@ -5,6 +5,7 @@ class UserSchema(Schema):
     id = fields.Integer()
     first_name = fields.String()
     password = fields.String()
+    email = fields.String()
 
 
 class NoteSchema(Schema):

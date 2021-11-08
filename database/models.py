@@ -47,9 +47,10 @@ class user(BaseModel):
     #            f"Email : {self.email}\n" \
     #            f"Phone : {self.phone}\n"
 
-    def __init__(self, first_name, password):
+    def __init__(self, first_name, password, email):
         self.first_name = first_name
         self.password = password
+        self.email = email
 
     # def __repr__(self):
     #     return "<User(name={self.first_name!r})>".format(self=self)
