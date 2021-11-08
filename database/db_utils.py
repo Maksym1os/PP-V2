@@ -1,10 +1,36 @@
 from functools import wraps
 
+import marshmallow
 from flask import jsonify, request
 
+from database.flask_ini import app
 from database.models import Session
 
 session = Session()
+
+
+class InvalidUsage(Exception):
+    status_code = 400
+
+    def __init__(self, message, status_code=None, payload=None):
+        Exception.__init__(self)
+        self.message = message
+        if status_code is not None:
+            self.status_code = status_code
+        self.payload = payload
+
+    def to_dict(self):
+        rv = dict(self.payload or ())
+        rv['message'] = self.message
+        # rv['status_code'] = self.status_code
+        return rv
+
+
+@app.errorhandler(InvalidUsage)
+def handle_invalid_usage(error):
+    response = jsonify(error.to_dict())
+    response.status_code = error.status_code
+    return response
 
 
 def db_lifecycle(func):
@@ -21,8 +47,11 @@ def db_lifecycle(func):
                 return jsonify({'message': e.args[0], 'type': 'KeyError'}), 400
             elif isinstance(e, TypeError):
                 return jsonify({'message': e.args[0], 'type': 'TypeError'}), 400
+            elif isinstance(e, marshmallow.exceptions.ValidationError):
+                return jsonify({'message': "Unknown field", 'type': 'ValidationError'}), 400
             else:
-                return jsonify({'message': str(e), 'type': 'InternalServerError'}), 500
+                raise e
+                # return jsonify({'message': str(e), 'type': 'InternalServerError'}), 500
 
     return wrapper
 
@@ -68,6 +97,10 @@ def get_obj_by_Id(ModelSchema, Model, Id):
 def upd_obj_by_Id(ModelSchema, Model, Id):
     new_data = ModelSchema().load(request.get_json())
     user_obj = session.query(Model).filter_by(id=Id).first()
+
+    if user_obj is None:
+        raise InvalidUsage("Object not found", status_code=404)
+
     for key, value in new_data.items():
         setattr(Model, key, value)
 
