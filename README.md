@@ -40,6 +40,8 @@ alembic downgrade -1
 > 
 > curl -X POST -H "Content-Type:application/json" --data-binary "{\"first_name\": \"Max\", \"email\": \"mx@gmail.com\", \"password\": \"dfghkgh\"}" http://localhost:5000/user
 >
+> curl -X POST -H "Content-Type:application/json" --data-binary "{\"first_name\": \"Max\", \"phone\": \"88005553535\", \"last_name\": \"Last_name\", \"username\": \"fayon\", \"email\": \"mx@gmail.com\", \"password\": \"dfghkgh\"}" http://localhost:5000/user
+> 
 > curl -X POST -H "Content-Type:application/json" --data-binary "{\"email\": \"mx@gmail.com\", \"password\": \"dfghkgh\"}" http://localhost:5000/user/login
 > 
 > curl -X GET http://localhost:5000/user/1

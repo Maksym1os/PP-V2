@@ -89,6 +89,8 @@ def get_objects(ModelSchema, Model):
 @db_lifecycle
 def get_obj_by_Id(ModelSchema, Model, Id):
     obj = Model.query.get(Id)
+    if obj is None:
+        raise InvalidUsage("Object not found", status_code=404)
     return jsonify(ModelSchema().dump(obj))
 
 
