@@ -65,6 +65,7 @@ class note(BaseModel):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey(user.id))
     name = Column(VARCHAR(255))
+    content = Column(VARCHAR(1000))
 
     def __init__(self, user_id, name):
         self.user_id = user_id
