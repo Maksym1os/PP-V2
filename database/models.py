@@ -66,17 +66,28 @@ class note(BaseModel):
     user_id = Column(Integer, ForeignKey(user.id))
     name = Column(VARCHAR(255))
 
+    def __init__(self, user_id, name):
+        self.user_id = user_id
+        self.name = name
+
 
 class connected_user(BaseModel):
     __tablename__ = "connected_user"
     user_id = Column(Integer, ForeignKey(user.id), primary_key=True)
     note_id = Column(Integer, ForeignKey(note.id), primary_key=True)
 
+    def __init__(self, user_id, note_id):
+        self.user_id = user_id
+        self.note_id = note_id
+
 
 class action(BaseModel):
     __tablename__ = "action"
     id = Column(Integer, primary_key=True)
     name = Column(VARCHAR(255))
+
+    def __init__(self, name):
+        self.name = name
 
 
 class note_log(BaseModel):
@@ -85,5 +96,10 @@ class note_log(BaseModel):
     note_id = Column(Integer, ForeignKey(note.id))
     user_id = Column(Integer, ForeignKey(user.id))
     action_id = Column(Integer, ForeignKey(action.id))
+
+    def __init__(self, note_id, user_id, action_id):
+        self.note_id = note_id
+        self.user_id = user_id
+        self.action_id = action_id
 
 # print(user.query.all())

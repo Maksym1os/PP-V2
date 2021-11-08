@@ -14,9 +14,14 @@ class UserSchema(Schema):
 
 class NoteSchema(Schema):
     id = fields.Integer()
+    user_id = fields.Integer()
     name = fields.String()
 
 
 class NoteLogSchema(Schema):
     id = fields.Integer()
     note_id = fields.Integer()
+    user_id = fields.Integer()
+    action_id = fields.Integer()
+
+

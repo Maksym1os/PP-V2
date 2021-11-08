@@ -4,6 +4,4 @@ from flask_bcrypt import Bcrypt
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
-
-import database.blueprints.blpr_user
-
+import database.blueprints.blpr_user, database.blueprints.blpr_note, database.blueprints.blpr_notelog
