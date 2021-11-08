@@ -1,3 +1,5 @@
+import bcrypt
+
 from database.flask_ini import app
 
 from database.models import user
@@ -8,8 +10,25 @@ from database.schemas import UserSchema
 
 
 @app.route("/user", methods=["POST"])
+@db_lifecycle
+@session_lifecycle
 def create_user():
-    return create_obj(UserSchema, user)
+    data = UserSchema().load(request.get_json())
+
+    password = request.json.get('password', None)
+    hashed = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
+
+    data.update({"password": hashed})
+
+    obj = user(**data)
+
+    session.add(obj)
+
+
+    # with Session() as s:
+    #     s.add(obj)
+    #     # s.commit()
+    return jsonify(UserSchema().dump(obj))
 
 
 @app.route('/user', methods=["GET"])
