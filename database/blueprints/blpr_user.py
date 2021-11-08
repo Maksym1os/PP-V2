@@ -1,6 +1,5 @@
 import bcrypt
 
-from database.flask_ini import app
 
 from database.models import user
 
@@ -36,7 +35,7 @@ def login():
     if bcrypt.checkpw(password.encode("utf-8"), user_obj.password.encode("utf-8")):
         return jsonify(UserSchema().dump(user_obj))
     else:
-        return 'Wrong Password'
+        return InvalidUsage("Wrong password", status_code=401)
 
 
 @app.route('/user', methods=["GET"])

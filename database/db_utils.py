@@ -1,6 +1,7 @@
 from functools import wraps
 
 import marshmallow
+import sqlalchemy
 from flask import jsonify, request
 
 from database.flask_ini import app
@@ -98,15 +99,15 @@ def get_obj_by_Id(ModelSchema, Model, Id):
 @session_lifecycle
 def upd_obj_by_Id(ModelSchema, Model, Id):
     new_data = ModelSchema().load(request.get_json())
-    user_obj = session.query(Model).filter_by(id=Id).first()
+    obj = session.query(Model).filter_by(id=Id).first()
 
-    if user_obj is None:
+    if obj is None:
         raise InvalidUsage("Object not found", status_code=404)
 
     for key, value in new_data.items():
         setattr(Model, key, value)
 
-    return jsonify(ModelSchema().dump(user_obj))
+    return jsonify(ModelSchema().dump(obj))
     # return Response("", status=201, mimetype='application/json')
 
 
@@ -114,5 +115,9 @@ def upd_obj_by_Id(ModelSchema, Model, Id):
 @session_lifecycle
 def delete_obj_by_id(ModelSchema, Model, Id):
     obj = session.query(Model).filter_by(id=Id).first()
+
+    if obj is None:
+        raise InvalidUsage("Object not found", status_code=404)
+
     session.delete(obj)
     return jsonify(ModelSchema().dump(obj))
