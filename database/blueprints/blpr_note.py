@@ -6,6 +6,8 @@ from database.db_utils import *
 
 from database.schemas import NoteSchema
 
+from sqlalchemy import func
+
 
 @app.route("/note", methods=["POST"])
 @db_lifecycle
@@ -46,6 +48,11 @@ def get_note_by_Id(Id):
 @session_lifecycle
 def upd_note_by_Id(Id):
     new_data = NoteSchema().load(request.get_json())
+
+    if session.query(note_log).filter_by(user_id=request.json.get("user_id", None)).first() is None:
+        if session.query(note_log).filter_by(note_id=Id).distinct("user_id").count() > 5:
+            raise InvalidUsage("More than 5 users", status_code=400)
+
     obj = session.query(note).filter_by(id=Id).first()
     act = action(obj.name)
 
