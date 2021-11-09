@@ -10,22 +10,22 @@ using virtualenv as virtual environment
 
 1. locate project directory
 2. create virtual environment by command
->>> virtualenv venv
+> virtualenv venv
 3. activate environment
->>> venv\Scripts\activate
+> venv\Scripts\activate
 4. install requirements
->>> pip install -r requirements.txt
+> pip install -r requirements.txt
 5. type
->>> waitress-serve --port=8000 app:app
+> waitress-serve --port=8000 app:app
 6. in web-browser write URL:
->>> http://localhost:8000/api/v1/hello-world-2
+> http://localhost:8000/api/v1/hello-world-2
 
 Lab_6
 
 1. create revision
->>> alembic stamp head
+> alembic stamp head
 >
->>> alembic revision -m "add models" --autogenerate
+> alembic revision -m "add models" --autogenerate
 2. upgrade head
 > alembic upgrade head
 >

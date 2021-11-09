@@ -7,7 +7,6 @@ from database.db_utils import *
 from database.schemas import NoteSchema
 
 
-
 @app.route("/note", methods=["POST"])
 @db_lifecycle
 @session_lifecycle
