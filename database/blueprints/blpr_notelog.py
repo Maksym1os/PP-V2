@@ -15,3 +15,15 @@ def get_logs():
 @app.route("/note_log/<int:Id>", methods=["GET"])
 def get_log_by_Id(Id):
     return get_obj_by_Id(NoteLogSchema, note_log, Id)
+
+
+@app.route("/note/note_log/<int:Id>", methods=["GET"])
+@db_lifecycle
+@session_lifecycle
+def get_logs_by_Id(Id):
+    logs = session.query(note_log).filter_by(note_id=Id)
+
+    if logs.first() is None:
+        raise InvalidUsage("Object not found", status_code=404)
+
+    return jsonify(NoteLogSchema(many=True).dump(logs))

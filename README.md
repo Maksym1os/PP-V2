@@ -63,6 +63,7 @@ Notes
 
 
 
+
 Note Log
 
 
@@ -70,3 +71,5 @@ Note Log
 > curl -X GET http://localhost:5000/note_log
 > 
 > curl -X GET http://localhost:5000/note_log/3
+> 
+> curl -X GET http://localhost:5000/note/note_log/153

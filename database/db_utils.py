@@ -50,16 +50,16 @@ def db_lifecycle(func):
                 return jsonify({'message': e.args[0], 'type': 'TypeError'}), 400
             elif isinstance(e, marshmallow.exceptions.ValidationError):
                 if str(e.args[0]).find("Unknown field") != -1:
-                    return jsonify(
-                        {'message': "Unknown field", 'type': 'ValidationError'}), 400
+                    raise InvalidUsage("Unknown field", status_code=400)
                 elif str(e.args[0]).find("Not a valid") != -1:
-                    return jsonify(
-                        {'message': "Wrong type", 'type': 'ValidationError'}), 400
+                    raise InvalidUsage("Wrong type", status_code=400)
                 raise e
             elif isinstance(e, sqlalchemy.exc.IntegrityError):
                 if str(e.args[0]).find("Duplicate entry") != -1:
-                    return jsonify({'message': "Duplicate entry",
-                                    'type': 'IntegrityError'}), 400
+                    raise InvalidUsage("Duplicate entry", status_code=400)
+                else:
+                    raise InvalidUsage("Incorrect data", status_code=400)
+                # raise e
             else:
                 raise e
                 # return jsonify({'message': str(e), 'type': 'InternalServerError'}), 500

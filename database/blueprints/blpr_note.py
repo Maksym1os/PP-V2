@@ -17,6 +17,10 @@ def create_note():
     obj = note(**data)
     act = action("created note")
 
+    if request.json.get("user_id", None) is None:
+        raise InvalidUsage("user_id is not present", status_code=400)
+
+
     session.add(act)
     session.add(obj)
 
@@ -49,11 +53,18 @@ def get_note_by_Id(Id):
 def upd_note_by_Id(Id):
     new_data = NoteSchema().load(request.get_json())
 
+    if request.json.get("user_id", None) is None:
+        raise InvalidUsage("user_id not present", status_code=404)
+
     if session.query(note_log).filter_by(user_id=request.json.get("user_id", None)).first() is None:
         if session.query(note_log).filter_by(note_id=Id).distinct("user_id").count() > 5:
             raise InvalidUsage("More than 5 users", status_code=400)
 
     obj = session.query(note).filter_by(id=Id).first()
+
+    if obj is None:
+        raise InvalidUsage("Object not found", status_code=404)
+
     act = action(obj.name)
 
     session.add(act)
@@ -67,9 +78,6 @@ def upd_note_by_Id(Id):
     log = note_log(obj.id, request.json.get("user_id", None), act.id)
 
     session.add(log)
-
-    if obj is None:
-        raise InvalidUsage("Object not found", status_code=404)
 
     for key, value in new_data.items():
         setattr(obj, key, value)
