@@ -6,7 +6,6 @@ from database.db_utils import *
 
 from database.schemas import NoteSchema
 
-from sqlalchemy import func
 
 
 @app.route("/note", methods=["POST"])
@@ -19,7 +18,6 @@ def create_note():
 
     if request.json.get("user_id", None) is None:
         raise InvalidUsage("user_id is not present", status_code=400)
-
 
     session.add(act)
     session.add(obj)

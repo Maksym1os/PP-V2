@@ -110,7 +110,6 @@ def get_obj_by_Id(ModelSchema, Model, Id):
 def upd_obj_by_Id(ModelSchema, Model, Id):
     new_data = ModelSchema().load(request.get_json())
     obj = session.query(Model).filter_by(id=Id).first()
-
     if obj is None:
         raise InvalidUsage("Object not found", status_code=404)
 
