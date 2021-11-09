@@ -23,17 +23,42 @@ tags:
 - name: user
   description: Operations about user
 paths:
-  /notelog:
-    post:
+  /notelog/{noteID}:
+    get:
       tags:
       - notelog
-      summary: Create a new log in post history
-      operationId: addLog
-      requestBody:
-        $ref: '#/components/requestBodies/NoteLog'
+      summary: Get all logs of a note
+      description: Returns a bunch of logs
+      operationId: getLog
+      parameters:
+      - name: noteID
+        in: path
+        description: ID of note to return log assosiated with
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
       responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NoteLog'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NoteLog'
+                
+        "400":
+          description: Invalid ID supplied
         "404":
-          description: post not found
+          description: Note not found
   /notelog/{notelogId}:
     get:
       tags:
@@ -67,33 +92,6 @@ paths:
           description: Notelog not found
       security:
       - api_key: []
-    post:
-      tags:
-      - notelog
-      summary: Updates a notelog in the store with form data
-      operationId: updateNotelogWithForm
-      parameters:
-      - name: notelogId
-        in: path
-        description: ID of notelog that needs to be updated
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-          format: int64
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/notelog_notelogId_body'
-      responses:
-        "405":
-          description: Invalid input
-      security:
-      - simplenotes_auth:
-        - write:notelog
-        - read:notelog
   /note:
     post:
       tags:
@@ -251,28 +249,6 @@ paths:
             schema:
               $ref: '#/components/schemas/User'
         required: true
-      responses:
-        default:
-          description: successful operation
-  /user/createWithArray:
-    post:
-      tags:
-      - user
-      summary: Creates list of users with given input array
-      operationId: createUsersWithArrayInput
-      requestBody:
-        $ref: '#/components/requestBodies/UserArray'
-      responses:
-        default:
-          description: successful operation
-  /user/createWithList:
-    post:
-      tags:
-      - user
-      summary: Creates list of users with given input array
-      operationId: createUsersWithListInput
-      requestBody:
-        $ref: '#/components/requestBodies/UserArray'
       responses:
         default:
           description: successful operation
