@@ -8,7 +8,7 @@ class UserSchema(Schema):
     password = fields.String()
     email = fields.String()
     username = fields.String()
-    phone = fields.String()
+    phone = fields.Number()
     user_status = fields.Integer()
 
 

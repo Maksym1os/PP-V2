@@ -49,7 +49,11 @@ def db_lifecycle(func):
             elif isinstance(e, TypeError):
                 return jsonify({'message': e.args[0], 'type': 'TypeError'}), 400
             elif isinstance(e, marshmallow.exceptions.ValidationError):
-                return jsonify({'message': "Unknown field", 'type': 'ValidationError'}), 400
+                return jsonify(
+                    {'message': "Unknown field or type", 'error': str(e.args[0]), 'type': 'ValidationError'}), 400
+            elif isinstance(e, sqlalchemy.exc.IntegrityError):
+                return jsonify({'message': "A foreign key constraint fails", 'error': str(e.args[0]),
+                                'type': 'IntegrityError'}), 400
             else:
                 raise e
                 # return jsonify({'message': str(e), 'type': 'InternalServerError'}), 500
@@ -105,7 +109,7 @@ def upd_obj_by_Id(ModelSchema, Model, Id):
         raise InvalidUsage("Object not found", status_code=404)
 
     for key, value in new_data.items():
-        setattr(Model, key, value)
+        setattr(obj, key, value)
 
     return jsonify(ModelSchema().dump(obj))
     # return Response("", status=201, mimetype='application/json')

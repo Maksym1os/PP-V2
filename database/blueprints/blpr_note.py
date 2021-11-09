@@ -13,12 +13,20 @@ from database.schemas import NoteSchema
 def create_note():
     data = NoteSchema().load(request.get_json())
     obj = note(**data)
-
     act = action("created note")
-    log = note_log(obj.id, 1, act.id)
+
     session.add(act)
-    session.add(log)
     session.add(obj)
+
+    try:
+        session.commit()
+    except Exception as e:
+        session.rollback()
+        raise e
+
+    log = note_log(obj.id, request.json.get("user_id", None), act.id)
+
+    session.add(log)
 
     return jsonify(NoteSchema().dump(obj))
 
@@ -40,7 +48,16 @@ def upd_note_by_Id(Id):
     new_data = NoteSchema().load(request.get_json())
     obj = session.query(note).filter_by(id=Id).first()
     act = action(obj.name)
-    log = note_log(obj.id, 1, act.id)
+
+    session.add(act)
+
+    try:
+        session.commit()
+    except Exception as e:
+        session.rollback()
+        raise e
+
+    log = note_log(obj.id, request.json.get("user_id", None), act.id)
 
     session.add(log)
 
@@ -48,7 +65,7 @@ def upd_note_by_Id(Id):
         raise InvalidUsage("Object not found", status_code=404)
 
     for key, value in new_data.items():
-        setattr(note, key, value)
+        setattr(obj, key, value)
 
     return jsonify(NoteSchema().dump(obj))
 
