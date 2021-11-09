@@ -27,7 +27,9 @@ Lab_6
 >
 >>> alembic revision -m "add models" --autogenerate
 2. upgrade head
->>> alembic upgrade head
+> alembic upgrade head
+>
+> alembic downgrade -1
 
 Lab_7
 
