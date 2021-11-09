@@ -46,7 +46,7 @@ def login():
         return jsonify({'token': access_token}), 200
         # return jsonify(UserSchema().dump(user_obj))
     else:
-        return InvalidUsage("Bad username or password", status_code=401)
+        raise InvalidUsage("Bad username or password", status_code=401)
 
 
 @app.route("/protected", methods=["GET"])
