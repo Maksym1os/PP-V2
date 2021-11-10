@@ -68,9 +68,11 @@ class note(BaseModel):
     content = Column(VARCHAR(500))
     tag = Column(VARCHAR(20))
 
-    def __init__(self, user_id, name):
+    def __init__(self, user_id, name, content, tag):
         self.user_id = user_id
         self.name = name
+        self.content = content
+        self.tag = tag
 
 
 class connected_user(BaseModel):
@@ -88,10 +90,10 @@ class action(BaseModel):
     id = Column(Integer, primary_key=True)
     name = Column(VARCHAR(50))
     content = Column(VARCHAR(500))
-    tag = Column(VARCHAR(20))
 
-    def __init__(self, name):
+    def __init__(self, name, content=""):
         self.name = name
+        self.content = content
 
 
 class note_log(BaseModel):

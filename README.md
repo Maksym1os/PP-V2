@@ -51,13 +51,15 @@ Users
 
 Notes
 
-> curl -X POST -H "Content-Type:application/json" --data-binary "{\"user_id\": \"1\", \"name\": \"sdgfkdhjfglk\"}" http://localhost:5000/note
+> curl -X POST -H "Content-Type:application/json" --data-binary "{\"user_id\": \"1\", \"name\": \"Title\", \"content\": \"some message\", \"tag\": \"test\"}" http://localhost:5000/note
 > 
 > curl -X GET http://localhost:5000/note
 > 
 > curl -X GET http://localhost:5000/note/3
 > 
-> curl -X PUT -H "Content-Type:application/json" --data-binary "{\"name\": \"name_to_change\", \"user_id\": \"7\"}" http://localhost:5000/note/3
+> curl -X GET http://localhost:5000/note/test
+> 
+> curl -X PUT -H "Content-Type:application/json" --data-binary "{\"name\": \"new name\", \"user_id\": \"7\", \"content\": \"new content\"}" http://localhost:5000/note/3
 > 
 > curl -X DELETE http://localhost:5000/note/1
 

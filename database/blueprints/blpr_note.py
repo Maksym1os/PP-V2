@@ -13,7 +13,7 @@ from database.schemas import NoteSchema
 def create_note():
     data = NoteSchema().load(request.get_json())
     obj = note(**data)
-    act = action("created note")
+    act = action(name="created note")
 
     if request.json.get("user_id", None) is None:
         raise InvalidUsage("user_id is not present", status_code=400)
@@ -44,6 +44,12 @@ def get_note_by_Id(Id):
     return get_obj_by_Id(NoteSchema, note, Id)
 
 
+@app.route("/note/<string:tag>", methods=["GET"])
+def get_notes_by_tag(tag):
+    notes = note.query.filter_by(tag=tag).all()
+    return jsonify(NoteSchema(many=True).dump(notes))
+
+
 @app.route("/note/<int:Id>", methods=["PUT"])
 @db_lifecycle
 @session_lifecycle
@@ -62,7 +68,7 @@ def upd_note_by_Id(Id):
     if obj is None:
         raise InvalidUsage("Object not found", status_code=404)
 
-    act = action(obj.name)
+    act = action(obj.name, obj.content)
 
     session.add(act)
 
