@@ -64,7 +64,9 @@ class note(BaseModel):
     __tablename__ = "note"
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey(user.id))
-    name = Column(VARCHAR(255))
+    name = Column(VARCHAR(50))
+    content = Column(VARCHAR(500))
+    tag = Column(VARCHAR(20))
 
     def __init__(self, user_id, name):
         self.user_id = user_id
@@ -84,7 +86,9 @@ class connected_user(BaseModel):
 class action(BaseModel):
     __tablename__ = "action"
     id = Column(Integer, primary_key=True)
-    name = Column(VARCHAR(255))
+    name = Column(VARCHAR(50))
+    content = Column(VARCHAR(500))
+    tag = Column(VARCHAR(20))
 
     def __init__(self, name):
         self.name = name

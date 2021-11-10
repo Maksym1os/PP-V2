@@ -1,4 +1,4 @@
-from marshmallow import Schema, fields, validate
+from marshmallow import Schema, fields
 
 
 class UserSchema(Schema):
@@ -16,6 +16,8 @@ class NoteSchema(Schema):
     id = fields.Integer()
     user_id = fields.Integer()
     name = fields.String()
+    content = fields.String()
+    tag = fields.String()
 
 
 class NoteLogSchema(Schema):
