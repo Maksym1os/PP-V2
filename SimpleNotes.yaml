@@ -18,12 +18,10 @@ servers:
 tags:
 - name: note
   description: A short note
-- name: note_history
-  description: Information about changes in note
 - name: user
   description: Operations about user
 paths:
-  /notelog/{noteID}:
+  /note/notelog/{noteID}:
     get:
       tags:
       - notelog
@@ -92,37 +90,22 @@ paths:
           description: Notelog not found
       security:
       - api_key: []
-  /note:
-    post:
-      tags:
-      - note
-      summary: Create a new note
-      operationId: addNote
-      requestBody:
-        $ref: '#/components/requestBodies/Note'
-      responses:
-        "200":
-          description: Note successfully created
-        "400":
-          description: Invalid name supplied
-  /note/findByTags:
+  /note/{tag}:
     get:
       tags:
       - note
-      summary: Finds Notes by tags
-      description: Muliple tags can be provided with comma separated strings. Use\ \ tag1, tag2, tag3 for testing.
-      operationId: findNotesByTags
+      summary: Finds Notes by tag
+      description: Tag can be provided as string
+      operationId: findNotesByTag
       parameters:
-      - name: tags
-        in: query
-        description: Tags to filter by
+      - name: tag
+        in: path
+        description: Tag to filter by
         required: true
-        style: form
-        explode: true
+        style: simple
+        explode: false
         schema:
-          type: array
-          items:
-            type: string
+          type: string
       responses:
         "200":
           description: successful operation
@@ -139,11 +122,23 @@ paths:
                   $ref: '#/components/schemas/Note'
         "400":
           description: Invalid tag value
-      deprecated: true
       security:
       - simplenotes_auth:
         - write:notes
         - read:notes
+  /note:
+    post:
+      tags:
+      - note
+      summary: Create a new note
+      operationId: addNote
+      requestBody:
+        $ref: '#/components/requestBodies/Note'
+      responses:
+        "200":
+          description: Note successfully created
+        "400":
+          description: Invalid name supplied
   /note/{noteId}:
     get:
       tags:
@@ -455,16 +450,6 @@ components:
             $ref: '#/components/schemas/Tag'
       xml:
         name: Note
-    ApiResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        type:
-          type: string
-        message:
-          type: string
     NoteLog:
       type: object
       properties:
@@ -487,15 +472,6 @@ components:
           format: int64
         name:
           type: string
-    notelog_notelogId_body:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Updated name of the notelog
-        status:
-          type: string
-          description: Updated status of the notelog
     note_noteId_body:
       type: object
       properties:
