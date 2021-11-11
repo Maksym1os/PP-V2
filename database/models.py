@@ -31,7 +31,7 @@ class user(BaseModel):
     __tablename__ = "user"
 
     id = Column(Integer, primary_key=True)
-    username = Column(VARCHAR(45))
+    username = Column(VARCHAR(45), unique=True)
     first_name = Column(VARCHAR(45))
     last_name = Column(VARCHAR(50))
     email = Column(VARCHAR(255))

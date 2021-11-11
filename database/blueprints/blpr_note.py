@@ -71,12 +71,7 @@ def upd_note_by_Id(Id):
     act = action(obj.name, obj.content)
 
     session.add(act)
-
-    try:
-        session.commit()
-    except Exception as e:
-        session.rollback()
-        raise e
+    session.flush()
 
     log = note_log(obj.id, request.json.get("user_id", None), act.id)
 
