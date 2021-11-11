@@ -24,5 +24,6 @@ class NoteLogSchema(Schema):
     note_id = fields.Integer()
     user_id = fields.Integer()
     action_id = fields.Integer()
+    date = fields.DateTime()
 
 
