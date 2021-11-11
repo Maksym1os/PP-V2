@@ -27,6 +27,7 @@ def create_user():
     data.update({"password": hashed})
     obj = user(**data)
     session.add(obj)
+    session.flush()
 
     return jsonify(UserSchema().dump(obj))
 

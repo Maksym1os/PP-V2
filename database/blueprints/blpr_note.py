@@ -20,12 +20,7 @@ def create_note():
 
     session.add(act)
     session.add(obj)
-
-    try:
-        session.commit()
-    except Exception as e:
-        session.rollback()
-        raise e
+    session.flush()
 
     log = note_log(obj.id, request.json.get("user_id", None), act.id)
 
