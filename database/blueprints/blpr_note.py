@@ -57,7 +57,7 @@ def upd_note_by_Id(Id):
         raise InvalidUsage("user_id not present", status_code=404)
 
     if session.query(note_log).filter_by(user_id=request.json.get("user_id", None)).first() is None:
-        if session.query(note_log).filter_by(note_id=Id).distinct("user_id").count() > 5:
+        if session.query(note_log).filter_by(note_id=Id).distinct("user_id").count() > 4:
             raise InvalidUsage("More than 5 users", status_code=400)
 
     obj = session.query(note).filter_by(id=Id).first()
