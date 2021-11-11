@@ -1,3 +1,5 @@
+from sqlalchemy import func
+
 from database.flask_ini import app
 
 from database.models import note, note_log, action

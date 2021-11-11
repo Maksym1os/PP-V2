@@ -98,6 +98,7 @@ class note_log(BaseModel):
     note_id = Column(Integer, ForeignKey(note.id))
     user_id = Column(Integer, ForeignKey(user.id))
     action_id = Column(Integer, ForeignKey(action.id))
+    date = Column(DateTime, server_default=func.now())
 
     def __init__(self, note_id, user_id, action_id):
         self.note_id = note_id

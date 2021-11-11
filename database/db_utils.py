@@ -61,10 +61,10 @@ def db_lifecycle(func):
                     raise InvalidUsage("Cannot delete or update this object", status_code=400)
                 if str(e.args[0]).find("Cannot add or update a child row: a foreign key constraint fails") != -1:
                     raise InvalidUsage("Cannot add or update this object, incorrect data", status_code=400)
-                # else:
-                #     raise InvalidUsage("Incorrect data", status_code=400)
-                return str(e.args[0])
-                raise e
+                else:
+                    raise InvalidUsage("Incorrect data", status_code=400)
+                # return str(e.args[0])
+                # raise e
             else:
                 raise e
                 # return jsonify({'message': str(e), 'type': 'InternalServerError'}), 500
