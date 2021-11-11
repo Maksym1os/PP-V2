@@ -33,7 +33,6 @@ Lab_6
 
 Lab_7
 
-alembic downgrade -1
 
 Users
 

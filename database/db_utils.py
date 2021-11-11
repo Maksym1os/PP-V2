@@ -66,8 +66,8 @@ def db_lifecycle(func):
                 # return str(e.args[0])
                 # raise e
             else:
-                raise e
-                # return jsonify({'message': str(e), 'type': 'InternalServerError'}), 500
+                # raise e
+                raise InvalidUsage("InternalServerError", status_code=404)
 
     return wrapper
 
