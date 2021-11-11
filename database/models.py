@@ -95,9 +95,9 @@ class action(BaseModel):
 class note_log(BaseModel):
     __tablename__ = "note_log"
     id = Column(Integer, primary_key=True)
-    note_id = Column(Integer, ForeignKey(note.id))
-    user_id = Column(Integer, ForeignKey(user.id))
-    action_id = Column(Integer, ForeignKey(action.id))
+    note_id = Column(Integer, ForeignKey(note.id, ondelete='CASCADE'))
+    user_id = Column(Integer, ForeignKey(user.id, ondelete='CASCADE'))
+    action_id = Column(Integer, ForeignKey(action.id, ondelete='CASCADE'))
     date = Column(DateTime, server_default=func.now())
 
     def __init__(self, note_id, user_id, action_id):
