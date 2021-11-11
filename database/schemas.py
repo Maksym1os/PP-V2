@@ -9,7 +9,6 @@ class UserSchema(Schema):
     email = fields.String()
     username = fields.String()
     phone = fields.Number()
-    user_status = fields.Integer()
 
 
 class NoteSchema(Schema):

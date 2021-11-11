@@ -37,7 +37,6 @@ class user(BaseModel):
     email = Column(VARCHAR(255))
     password = Column(VARCHAR(100))
     phone = Column(VARCHAR(20))
-    user_status = Column(Integer)
 
     # def __str__(self):
     #     return f"User ID : {self.id}\n" \
@@ -55,9 +54,6 @@ class user(BaseModel):
         self.phone = phone
         self.user_status = user_status
         self.email = email
-
-    # def __repr__(self):
-    #     return "<User(name={self.first_name!r})>".format(self=self)
 
 
 class note(BaseModel):
