@@ -4,7 +4,7 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
-from sql import BaseModel
+from database.models import BaseModel
 import sys
 
 sys.path.append(r"C:\LABS\PP\lab_6\PP_lab")
@@ -32,7 +32,7 @@ target_metadata = BaseModel.metadata
 
 config.set_main_option(
     "sqlalchemy.url",
-    "mysql+pymysql://root:password@127.0.0.1/SimpleNotes"
+    "mysql+pymysql://root:45627349350923@127.0.0.1/lab-7"
 )
 
 
