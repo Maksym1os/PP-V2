@@ -97,10 +97,12 @@ Notes
 
 Note Log
 
+>> get all note_logs
+>
 > curl -X GET http://localhost:5000/note_log
 > 
-> curl -X GET http://localhost:5000/note_log/3
+>> get note_log by id 
 > 
-> curl -X GET http://localhost:5000/note/note_log/153
+> curl -X GET http://localhost:5000/note_log/4 -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYzNzU4ODgyOCwianRpIjoiZWFlNzVhMzEtNDUyZS00ODU5LTk4NDctMjc1NzhhYzcxYmFiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im14QGdtYWlsLmNvbSIsIm5iZiI6MTYzNzU4ODgyOCwiZXhwIjoxNjM4MTkzNjI4fQ.SAkmbWlKPB8s-wGH1gn5u232RVlsWvmI_R_hjLAblGw"
 
 Lab_8

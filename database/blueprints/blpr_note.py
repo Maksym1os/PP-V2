@@ -2,7 +2,7 @@ from database.models import note, note_log, user, action, connected_user
 from database.db_utils import *
 from database.schemas import NoteSchema
 
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
 @app.route("/note", methods=["POST"])
