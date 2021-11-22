@@ -31,7 +31,7 @@ Lab_6
 >
 > alembic downgrade -1
 
-Lab_7
+Lab_8
 
 Users
 
@@ -51,7 +51,7 @@ Users
 > 
 >> get user by id
 > 
-> curl -X GET http://localhost:5000/user/4 -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYzNzU4NjM5MiwianRpIjoiYTIzNGU2ZjMtZTUxMy00YjQ2LTk4ZjItMzgyYmU1N2YyMjI0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im14QGdtYWlsLmNvbSIsIm5iZiI6MTYzNzU4NjM5MiwiZXhwIjoxNjM3NTg3MjkyfQ.j3X-GFQZfLEXnUG_R7n5uRx31zz1X-Se4a5v-bdTsmk" 
+> curl -X GET http://localhost:5000/user/1 -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYzNzU4NjM5MiwianRpIjoiYTIzNGU2ZjMtZTUxMy00YjQ2LTk4ZjItMzgyYmU1N2YyMjI0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im14QGdtYWlsLmNvbSIsIm5iZiI6MTYzNzU4NjM5MiwiZXhwIjoxNjM3NTg3MjkyfQ.j3X-GFQZfLEXnUG_R7n5uRx31zz1X-Se4a5v-bdTsmk" 
 >
 >> get user by username
 > 
@@ -59,29 +59,29 @@ Users
 > 
 >> change user by id
 > 
-> curl -X PUT http://localhost:5000/user/4 -H "Content-Type:application/json" --data-binary "{\"first_name\": \"Boy\"}" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYzNzU4NzYxOSwianRpIjoiMDRkMDBkYWYtMTQ4ZS00ZjhkLTk4NjItMWY2NGRjYWQ1YmViIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im14QGdtYWlsLmNvbSIsIm5iZiI6MTYzNzU4NzYxOSwiZXhwIjoxNjM3NTg4NTE5fQ.QF9nN7kb5rpjvI7FFnaH5uduWIoahClhkWUEnl_a5QI"
+> curl -X PUT http://localhost:5000/user/1 -H "Content-Type:application/json" --data-binary "{\"first_name\": \"Boy\"}" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYzNzU4NzYxOSwianRpIjoiMDRkMDBkYWYtMTQ4ZS00ZjhkLTk4NjItMWY2NGRjYWQ1YmViIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im14QGdtYWlsLmNvbSIsIm5iZiI6MTYzNzU4NzYxOSwiZXhwIjoxNjM3NTg4NTE5fQ.QF9nN7kb5rpjvI7FFnaH5uduWIoahClhkWUEnl_a5QI"
 > 
 >> delete user by id
 > 
-> curl -X DELETE http://localhost:5000/user/4 -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYzNzU4NzYxOSwianRpIjoiMDRkMDBkYWYtMTQ4ZS00ZjhkLTk4NjItMWY2NGRjYWQ1YmViIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im14QGdtYWlsLmNvbSIsIm5iZiI6MTYzNzU4NzYxOSwiZXhwIjoxNjM3NTg4NTE5fQ.QF9nN7kb5rpjvI7FFnaH5uduWIoahClhkWUEnl_a5QI"
+> curl -X DELETE http://localhost:5000/user/1 -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYzNzU4NzYxOSwianRpIjoiMDRkMDBkYWYtMTQ4ZS00ZjhkLTk4NjItMWY2NGRjYWQ1YmViIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im14QGdtYWlsLmNvbSIsIm5iZiI6MTYzNzU4NzYxOSwiZXhwIjoxNjM3NTg4NTE5fQ.QF9nN7kb5rpjvI7FFnaH5uduWIoahClhkWUEnl_a5QI"
 
 Notes
 
 >> create note
 > 
-> curl -X POST http://localhost:5000/note -H "Content-Type:application/json" --data-binary "{\"user_id\": \"6\", \"name\": \"Title\", \"content\": \"some message\", \"tag\": \"test\"}" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYzNzU4ODgyOCwianRpIjoiZWFlNzVhMzEtNDUyZS00ODU5LTk4NDctMjc1NzhhYzcxYmFiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im14QGdtYWlsLmNvbSIsIm5iZiI6MTYzNzU4ODgyOCwiZXhwIjoxNjM4MTkzNjI4fQ.SAkmbWlKPB8s-wGH1gn5u232RVlsWvmI_R_hjLAblGw"
+> curl -X POST http://localhost:5000/note -H "Content-Type:application/json" --data-binary "{\"user_id\": \"1\", \"name\": \"Title\", \"content\": \"some message\", \"tag\": \"test\"}" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYzNzU4ODgyOCwianRpIjoiZWFlNzVhMzEtNDUyZS00ODU5LTk4NDctMjc1NzhhYzcxYmFiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im14QGdtYWlsLmNvbSIsIm5iZiI6MTYzNzU4ODgyOCwiZXhwIjoxNjM4MTkzNjI4fQ.SAkmbWlKPB8s-wGH1gn5u232RVlsWvmI_R_hjLAblGw"
 > 
 >> add user
 > 
-> curl -X PUT http://localhost:5000/note/add/6,3 -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYzNzU4ODgyOCwianRpIjoiZWFlNzVhMzEtNDUyZS00ODU5LTk4NDctMjc1NzhhYzcxYmFiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im14QGdtYWlsLmNvbSIsIm5iZiI6MTYzNzU4ODgyOCwiZXhwIjoxNjM4MTkzNjI4fQ.SAkmbWlKPB8s-wGH1gn5u232RVlsWvmI_R_hjLAblGw"
+> curl -X PUT http://localhost:5000/note/add/2,1 -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYzNzU4ODgyOCwianRpIjoiZWFlNzVhMzEtNDUyZS00ODU5LTk4NDctMjc1NzhhYzcxYmFiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im14QGdtYWlsLmNvbSIsIm5iZiI6MTYzNzU4ODgyOCwiZXhwIjoxNjM4MTkzNjI4fQ.SAkmbWlKPB8s-wGH1gn5u232RVlsWvmI_R_hjLAblGw"
 >
->> get all notes 
+>> get note by id
 > 
-> curl -X GET http://localhost:5000/note/3 -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYzNzU4ODgyOCwianRpIjoiZWFlNzVhMzEtNDUyZS00ODU5LTk4NDctMjc1NzhhYzcxYmFiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im14QGdtYWlsLmNvbSIsIm5iZiI6MTYzNzU4ODgyOCwiZXhwIjoxNjM4MTkzNjI4fQ.SAkmbWlKPB8s-wGH1gn5u232RVlsWvmI_R_hjLAblGw"
+> curl -X GET http://localhost:5000/note/1 -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYzNzU4ODgyOCwianRpIjoiZWFlNzVhMzEtNDUyZS00ODU5LTk4NDctMjc1NzhhYzcxYmFiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im14QGdtYWlsLmNvbSIsIm5iZiI6MTYzNzU4ODgyOCwiZXhwIjoxNjM4MTkzNjI4fQ.SAkmbWlKPB8s-wGH1gn5u232RVlsWvmI_R_hjLAblGw"
 > 
->> get note by id 
+>> get all notes
 > 
-> curl -X GET http://localhost:5000/note/3
+> curl -X GET http://localhost:5000/note/
 > 
 >> get note by tag
 > 
@@ -89,11 +89,11 @@ Notes
 > 
 >>  change note by id
 > 
-> curl -X PUT http://localhost:5000/note/3 -H "Content-Type:application/json" --data-binary "{\"name\": \"new name\", \"content\": \"new content\"}" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYzNzU4ODgyOCwianRpIjoiZWFlNzVhMzEtNDUyZS00ODU5LTk4NDctMjc1NzhhYzcxYmFiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im14QGdtYWlsLmNvbSIsIm5iZiI6MTYzNzU4ODgyOCwiZXhwIjoxNjM4MTkzNjI4fQ.SAkmbWlKPB8s-wGH1gn5u232RVlsWvmI_R_hjLAblGw"
+> curl -X PUT http://localhost:5000/note/1 -H "Content-Type:application/json" --data-binary "{\"name\": \"new name\", \"content\": \"new content\"}" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYzNzU4ODgyOCwianRpIjoiZWFlNzVhMzEtNDUyZS00ODU5LTk4NDctMjc1NzhhYzcxYmFiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im14QGdtYWlsLmNvbSIsIm5iZiI6MTYzNzU4ODgyOCwiZXhwIjoxNjM4MTkzNjI4fQ.SAkmbWlKPB8s-wGH1gn5u232RVlsWvmI_R_hjLAblGw"
 > 
 >> delete note by id 
 > 
-> curl -X DELETE http://localhost:5000/note/3 -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYzNzU4ODgyOCwianRpIjoiZWFlNzVhMzEtNDUyZS00ODU5LTk4NDctMjc1NzhhYzcxYmFiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im14QGdtYWlsLmNvbSIsIm5iZiI6MTYzNzU4ODgyOCwiZXhwIjoxNjM4MTkzNjI4fQ.SAkmbWlKPB8s-wGH1gn5u232RVlsWvmI_R_hjLAblGw"
+> curl -X DELETE http://localhost:5000/note/1 -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYzNzU4ODgyOCwianRpIjoiZWFlNzVhMzEtNDUyZS00ODU5LTk4NDctMjc1NzhhYzcxYmFiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im14QGdtYWlsLmNvbSIsIm5iZiI6MTYzNzU4ODgyOCwiZXhwIjoxNjM4MTkzNjI4fQ.SAkmbWlKPB8s-wGH1gn5u232RVlsWvmI_R_hjLAblGw"
 
 Note Log
 
@@ -103,6 +103,4 @@ Note Log
 > 
 >> get note_log by id 
 > 
-> curl -X GET http://localhost:5000/note_log/4 -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYzNzU4ODgyOCwianRpIjoiZWFlNzVhMzEtNDUyZS00ODU5LTk4NDctMjc1NzhhYzcxYmFiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im14QGdtYWlsLmNvbSIsIm5iZiI6MTYzNzU4ODgyOCwiZXhwIjoxNjM4MTkzNjI4fQ.SAkmbWlKPB8s-wGH1gn5u232RVlsWvmI_R_hjLAblGw"
-
-Lab_8
+> curl -X GET http://localhost:5000/note_log/1 -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYzNzU4ODgyOCwianRpIjoiZWFlNzVhMzEtNDUyZS00ODU5LTk4NDctMjc1NzhhYzcxYmFiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im14QGdtYWlsLmNvbSIsIm5iZiI6MTYzNzU4ODgyOCwiZXhwIjoxNjM4MTkzNjI4fQ.SAkmbWlKPB8s-wGH1gn5u232RVlsWvmI_R_hjLAblGw"
