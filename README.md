@@ -33,31 +33,17 @@ Lab_6
 
 Lab_7
 
-
-curl -X POST -H "Content-Type:application/json" --data-binary "{\"first_name\": \"Max\", \"phone\": \"88005553535\", \"last_name\": \"Last_name\", \"username\": \"fayon1\", \"email\": \"mx@gmail.com\", \"password\": \"dfghkgh\"}" http://localhost:5000/user
-curl -X POST -H "Content-Type:application/json" --data-binary "{\"first_name\": \"Max\", \"phone\": \"88005553535\", \"last_name\": \"Last_name\", \"username\": \"fayon2\", \"email\": \"mx@gmail.com\", \"password\": \"dfghkgh\"}" http://localhost:5000/user
-curl -X POST -H "Content-Type:application/json" --data-binary "{\"first_name\": \"Max\", \"phone\": \"88005553535\", \"last_name\": \"Last_name\", \"username\": \"fayon3\", \"email\": \"mx@gmail.com\", \"password\": \"dfghkgh\"}" http://localhost:5000/user
-curl -X POST -H "Content-Type:application/json" --data-binary "{\"first_name\": \"Max\", \"phone\": \"88005553535\", \"last_name\": \"Last_name\", \"username\": \"fayon4\", \"email\": \"mx@gmail.com\", \"password\": \"dfghkgh\"}" http://localhost:5000/user
-curl -X POST -H "Content-Type:application/json" --data-binary "{\"first_name\": \"Max\", \"phone\": \"88005553535\", \"last_name\": \"Last_name\", \"username\": \"fayon5\", \"email\": \"mx@gmail.com\", \"password\": \"dfghkgh\"}" http://localhost:5000/user
-curl -X POST -H "Content-Type:application/json" --data-binary "{\"first_name\": \"Max\", \"phone\": \"88005553535\", \"last_name\": \"Last_name\", \"username\": \"fayon6\", \"email\": \"mx@gmail.com\", \"password\": \"dfghkgh\"}" http://localhost:5000/user
-
-curl -X POST -H "Content-Type:application/json" --data-binary "{\"user_id\": \"1\", \"name\": \"Title\", \"content\": \"some message\", \"tag\": \"test\"}" http://localhost:5000/note
-curl -X PUT -H "Content-Type:application/json" --data-binary "{\"name\": \"new name\", \"user_id\": \"2\", \"content\": \"new content\"}" http://localhost:5000/note/1
-curl -X PUT -H "Content-Type:application/json" --data-binary "{\"name\": \"new name\", \"user_id\": \"3\", \"content\": \"new content\"}" http://localhost:5000/note/1
-curl -X PUT -H "Content-Type:application/json" --data-binary "{\"name\": \"new name\", \"user_id\": \"4\", \"content\": \"new content\"}" http://localhost:5000/note/1
-curl -X PUT -H "Content-Type:application/json" --data-binary "{\"name\": \"new name\", \"user_id\": \"5\", \"content\": \"new content\"}" http://localhost:5000/note/1
-
-curl -X PUT -H "Content-Type:application/json" --data-binary "{\"name\": \"new name\", \"user_id\": \"6\", \"content\": \"new content\"}" http://localhost:5000/note/1
-
 Users
 
 > curl -X GET http://localhost:5000/user
 >
 > curl -X POST -H "Content-Type:application/json" --data-binary "{\"first_name\": \"Max\", \"phone\": \"88005553535\", \"last_name\": \"Last_name\", \"username\": \"fayon\", \"email\": \"mx@gmail.com\", \"password\": \"dfghkgh\"}" http://localhost:5000/user
+>
+> curl -X POST -H "Content-Type:application/json" --data-binary "{\"first_name\": \"Danylo\", \"phone\": \"88006653535\", \"last_name\": \"Last_name\", \"username\": \"theDaniel\", \"email\": \"9sarvas9@gmail.com\", \"password\": \"123\"}" http://localhost:5000/user 
 > 
-> curl -X POST -H "Content-Type:application/json" --data-binary "{\"email\": \"mx@gmail.com\", \"password\": \"dfghkgh\"}" http://localhost:5000/user/login
+> curl -X GET -u 9sarvas9@gmail.com:$2b$12$KKxS/Vk1X7Gey/KQuHLmK.GE7Lb2aVjg3niKks7/t3GP5C8xzSVMa http://localhost:5000/login
 > 
-> curl -X GET http://localhost:5000/user/1
+> curl -X GET http://localhost:5000/user/4 -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYzNzU4NDY5OCwianRpIjoiMWU2N2E2YzctYjRkYS00OWNiLWFjMTAtNzQzOGU1NzUxNWEyIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjlzYXJ2YXM5QGdtYWlsLmNvbSIsIm5iZiI6MTYzNzU4NDY5OCwiZXhwIjoxNjM3NTg1NTk4fQ.sbB7kzy4iO0fBlLuNJYdvbVNd967ci4Iz5Rf7zkMFrU" 
 >
 > curl -X PUT -H "Content-Type:application/json" --data-binary "{\"first_name\": \"Boy\"}" http://localhost:5000/user/2
 > 
@@ -77,15 +63,12 @@ Notes
 > 
 > curl -X DELETE http://localhost:5000/note/1
 
-
-
-
 Note Log
 
-
-> 
 > curl -X GET http://localhost:5000/note_log
 > 
 > curl -X GET http://localhost:5000/note_log/3
 > 
 > curl -X GET http://localhost:5000/note/note_log/153
+
+Lab_8
