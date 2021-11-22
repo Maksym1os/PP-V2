@@ -1,5 +1,5 @@
 import bcrypt
-from flask_bcrypt import check_password_hash
+import datetime
 
 from database.models import user
 from database.db_utils import *
@@ -27,21 +27,6 @@ def create_user():
     return jsonify(UserSchema().dump(obj))
 
 
-# @app.route("/login", methods=["GET"])
-# @db_lifecycle
-# def login():
-#     email = request.json.get('email', None)
-#     password = request.json.get('password', None)
-#
-#     user_obj = user.query.filter_by(email=email).first()
-#
-#     if check_password_hash(user_obj.password, password):
-#         access_token = create_access_token(identity=email)
-#         return jsonify({'token': access_token}), 200
-#
-#     raise InvalidUsage("Unexisting username or password", status_code=401)
-
-
 @app.route("/login", methods=["GET"])
 @db_lifecycle
 def login():
@@ -53,7 +38,7 @@ def login():
     user_obj = user.query.filter_by(email=auth.username).first()
 
     if user_obj.password == auth.password:
-        access_token = create_access_token(identity=auth.username)
+        access_token = create_access_token(identity=auth.username, expires_delta=datetime.timedelta(days=7))
         return jsonify({'token': access_token})
 
     raise InvalidUsage("Unexisting username or password", status_code=401)
@@ -78,16 +63,39 @@ def get_user_by_Id(Id):
 
 
 @app.route("/user/<string:username>", methods=["GET"])
+@jwt_required()
+@db_lifecycle
 def get_user_by_name(username):
-    obj = user.query.filter_by(username=username).first()
-    return jsonify(UserSchema().dump(obj))
+    current_user_email = get_jwt_identity()
+    user_obj = user.query.filter_by(username=username).first()
+
+    if current_user_email != user_obj.email:
+        return jsonify("Access denied", 402)
+
+    return jsonify(UserSchema().dump(user_obj))
 
 
 @app.route("/user/<int:Id>", methods=["PUT"])
+@jwt_required()
+@db_lifecycle
 def upd_user_by_Id(Id):
+    current_user_email = get_jwt_identity()
+    user_obj = user.query.filter_by(id=Id).first()
+
+    if current_user_email != user_obj.email:
+        return jsonify("Access denied", 402)
+
     return upd_obj_by_Id(UserSchema, user, Id)
 
 
 @app.route("/user/<int:Id>", methods=["DELETE"])  # delete user by id
+@jwt_required()
+@db_lifecycle
 def delete_user_by_id(Id):
+    current_user_email = get_jwt_identity()
+    user_obj = user.query.filter_by(id=Id).first()
+
+    if current_user_email != user_obj.email:
+        return jsonify("Access denied", 402)
+
     return delete_obj_by_id(UserSchema, user, Id)
