@@ -12,7 +12,7 @@ import sys
 
 # sys.path.append(r"C:\LABS\PP\lab_6\PP_lab")
 
-engine = create_engine("mysql+pymysql://root:45627349350923@127.0.0.1/lab-7")
+engine = create_engine("mysql+pymysql://root:22121356@127.0.0.1/swagger_notes")
 
 engine.connect()
 
@@ -76,7 +76,7 @@ class connected_user(BaseModel):
     user_id = Column(Integer, ForeignKey(user.id), primary_key=True)
     note_id = Column(Integer, ForeignKey(note.id), primary_key=True)
 
-    def __init__(self, user_id, note_id):
+    def __init__(self, user_id=None, note_id=None):
         self.user_id = user_id
         self.note_id = note_id
 
