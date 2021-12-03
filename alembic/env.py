@@ -7,7 +7,7 @@ from alembic import context
 from database.models import BaseModel
 import sys
 
-sys.path.append(r"C:\LABS\PP\lab_6\PP_lab")
+sys.path.append(r"C:\LABS\PP\PP-V2\PP-V2")
 
 
 # this is the Alembic Config object, which provides
@@ -32,7 +32,7 @@ target_metadata = BaseModel.metadata
 
 config.set_main_option(
     "sqlalchemy.url",
-    "mysql+pymysql://root:22121356@127.0.0.1/swagger_notes"
+    "mysql+pymysql://root:password@127.0.0.1/swagger_notes"
 )
 
 

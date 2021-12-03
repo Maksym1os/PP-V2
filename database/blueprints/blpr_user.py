@@ -9,6 +9,33 @@ from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identi
 
 app.config['SECRET_KEY'] = 'secret'
 
+class InvalidUsage(Exception):
+    status_code = 400
+
+    def __init__(self, message, status_code=None, payload=None):
+        Exception.__init__(self)
+        self.message = message
+        if status_code is not None:
+            self.status_code = status_code
+        self.payload = payload
+
+    def to_dict(self):
+        rv = dict(self.payload or ())
+        rv['message'] = self.message
+        # rv['status_code'] = self.status_code
+        return rv
+
+
+@app.errorhandler(InvalidUsage)
+def handle_invalid_usage(error):
+    response = jsonify(error.to_dict())
+    response.status_code = error.status_code
+    return response
+
+@app.route('/')
+def hello_world():
+    return 'Hello, World!'
+
 
 @app.route("/user", methods=["POST"])
 @db_lifecycle
@@ -39,7 +66,7 @@ def login():
 
     if user_obj.password == auth.password:
         access_token = create_access_token(identity=auth.username, expires_delta=datetime.timedelta(days=7))
-        return jsonify({'token': access_token})
+        return jsonify(access_token)
 
     raise InvalidUsage("Unexisting username or password", status_code=401)
 
@@ -57,7 +84,7 @@ def get_user_by_Id(Id):
     user_obj = user.query.filter_by(id=Id).first()
 
     if current_user_email != user_obj.email:
-        return jsonify("Access denied", 402)
+        raise InvalidUsage(status_code=402)
 
     return get_obj_by_Id(UserSchema, user, Id)
 
@@ -70,7 +97,7 @@ def get_user_by_name(username):
     user_obj = user.query.filter_by(username=username).first()
 
     if current_user_email != user_obj.email:
-        return jsonify("Access denied", 402)
+        raise InvalidUsage(status_code=402)
 
     return jsonify(UserSchema().dump(user_obj))
 
@@ -83,14 +110,14 @@ def upd_user_by_Id(Id):
     user_obj = user.query.filter_by(id=Id).first()
 
     if current_user_email != user_obj.email:
-        return jsonify("Access denied", 402)
+        raise InvalidUsage(status_code=402)
 
     return upd_obj_by_Id(UserSchema, user, Id)
 
 
 @app.route("/user/<int:Id>", methods=["DELETE"])  # delete user by id
 @jwt_required()
-@db_lifecycle
+# @db_lifecycle
 def delete_user_by_id(Id):
     current_user_email = get_jwt_identity()
     user_obj = user.query.filter_by(id=Id).first()

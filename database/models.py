@@ -1,8 +1,8 @@
 # import os
 # import pymysql
 # from flask_sqlalchemy import SQLAlchemy
-# from flask import Flask
-# from app import app
+from flask import Flask
+from app import app
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
@@ -12,7 +12,7 @@ import sys
 
 # sys.path.append(r"C:\LABS\PP\lab_6\PP_lab")
 
-engine = create_engine("mysql+pymysql://root:22121356@127.0.0.1/swagger_notes")
+engine = create_engine("mysql+pymysql://root:password@127.0.0.1/swagger_notes")
 
 engine.connect()
 
@@ -46,14 +46,21 @@ class user(BaseModel):
     #            f"Email : {self.email}\n" \
     #            f"Phone : {self.phone}\n"
 
-    def __init__(self, first_name, password, email, username, last_name, phone, user_status=0):
-        self.first_name = first_name
+    # def __init__(self, id, first_name, password, email, username, last_name, phone, user_status=0):
+    #     self.id = id
+    #     self.first_name = first_name
+    #     self.password = password
+    #     self.username = username
+    #     self.last_name = last_name
+    #     self.phone = phone
+    #     self.user_status = user_status
+    #     self.email = email
+
+    def __init__(self, id, username, password, user_status=0):
+        self.id = id
         self.password = password
         self.username = username
-        self.last_name = last_name
-        self.phone = phone
         self.user_status = user_status
-        self.email = email
 
 
 class note(BaseModel):
@@ -64,7 +71,8 @@ class note(BaseModel):
     content = Column(VARCHAR(500))
     tag = Column(VARCHAR(20))
 
-    def __init__(self, user_id, name, content, tag):
+    def __init__(self, id, user_id, name, content, tag):
+        self.id = id
         self.user_id = user_id
         self.name = name
         self.content = content
